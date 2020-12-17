@@ -1,4 +1,10 @@
 eclipse.preferences.version=1
+encoding//CM_RAM/device/driverlib_cm/ccs/Debug/subdir_rules.mk=UTF-8
+encoding//CM_RAM/device/driverlib_cm/ccs/Debug/subdir_vars.mk=UTF-8
+encoding//CM_RAM/device/driverlib_cm/ccs/Release/subdir_rules.mk=UTF-8
+encoding//CM_RAM/device/driverlib_cm/ccs/Release/subdir_vars.mk=UTF-8
+encoding//CM_RAM/device/driverlib_cm/subdir_rules.mk=UTF-8
+encoding//CM_RAM/device/driverlib_cm/subdir_vars.mk=UTF-8
 encoding//CM_RAM/device/subdir_rules.mk=UTF-8
 encoding//CM_RAM/device/subdir_vars.mk=UTF-8
 encoding//CM_RAM/makefile=UTF-8

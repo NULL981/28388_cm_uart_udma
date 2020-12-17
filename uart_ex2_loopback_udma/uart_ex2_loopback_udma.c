@@ -81,8 +81,11 @@ UDMA_ControlTable ucControlTable[64];
 // Initialize the data arrays
 //
 uint8_t TxData[] = {0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
-uint8_t RxData[] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};	
+uint8_t RxData[] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
 
+
+double electricityValue = 0;
+double sendFifoElectricityValue = 0;
 void ConfigureUART(void)
 {
 
@@ -167,7 +170,7 @@ void ConfigureDMA(uint8_t* TxDma, uint8_t* RxDma, uint8_t size)
                                  (void *)(UART0_BASE + UART_O_DR), RxDma, UDMA_MODE_BASIC,
                                   size);
 }
-
+#include <math.h>
 //
 // Main
 //
@@ -175,6 +178,11 @@ void main(void)
 {
     uint8_t i;
     uint8_t  errCount = 0;
+    static unsigned char flag = 0;
+    static unsigned char step = 0;
+    static double time;
+    int dir = 1;
+    static unsigned char isSendOk = 0;
 
     //
     // Disable WD, enable peripheral clocks.
@@ -217,5 +225,67 @@ void main(void)
     //
     // Loop forever. Optional
     //
-    while(1);
+    while(1){
+
+        time++;
+        switch(step){
+        case 0:
+            ConfigureDMA(TxData, RxData, 2);
+            if(dir == 1){
+                if(TxData[0] > 100){
+                    dir = -1;
+                }
+            }
+            if(dir == -1){
+                if(TxData[0] < 1){
+                    dir = 1;
+                }
+            }
+            TxData[0]+=dir;
+            TxData[1]+=dir;
+            isSendOk = 0;
+            UDMA_enableChannel(UDMA_BASE, UDMA_CHANNEL_UART0_RX);
+            UDMA_enableChannel(UDMA_BASE, UDMA_CHANNEL_UART0_TX);
+            step++;
+            break;
+        case 1:
+            if(UDMA_isChannelEnabled(UDMA_BASE, UDMA_CHANNEL_UART0_TX) == false){
+                if(UDMA_isChannelEnabled(UDMA_BASE, UDMA_CHANNEL_UART0_RX) == false){
+                    step++;
+                    isSendOk = 1;
+                }
+            }
+
+            break;
+        case 2:
+            flag = 0;
+            step = 0;
+            break;
+        }
+
+
+
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
