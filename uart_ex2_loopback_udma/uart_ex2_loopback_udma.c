@@ -246,7 +246,7 @@ void main(void)
             isSendOk = 0;
             UDMA_enableChannel(UDMA_BASE, UDMA_CHANNEL_UART0_RX);
             UDMA_enableChannel(UDMA_BASE, UDMA_CHANNEL_UART0_TX);
-            step++;
+            step++;//  11
             break;
         case 1:
             if(UDMA_isChannelEnabled(UDMA_BASE, UDMA_CHANNEL_UART0_TX) == false){
