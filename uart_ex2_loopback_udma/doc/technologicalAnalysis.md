@@ -12,7 +12,7 @@
 >
 > 我的理解：
 >
-> ![](./resource\pics\01_UART_Lookback_mode.PNG)
+> ![](.\resource\pics\01_UART_Lookback_mode.PNG)
 
 
 
@@ -25,6 +25,18 @@ UDMA_setChannelTransferParams(UDMA_BASE, (UDMA_CHANNEL_UART0_RX | UDMA_PRI_SELEC
 ```
 
 NOTE: 从上述代码可以看出，本例程中使用的uDMA的传输模式为  UDMA_MODE_BASIC
+
+
+
+## uDMA how to work with he UART
+
+## block
+
+
+
+![](.\resource\pics\02_UART_uDMA_request.PNG)
+
+
 
 
 
